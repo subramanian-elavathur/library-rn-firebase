@@ -2,10 +2,6 @@
 #
 .DS_Store
 
-# Firebase
-# 
-GoogleService-Info.plist
-
 # Xcode
 #
 build/
