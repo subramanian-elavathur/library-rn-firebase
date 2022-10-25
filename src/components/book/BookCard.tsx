@@ -12,9 +12,10 @@ import {useTailwind} from 'tailwind-rn';
 interface BookCardProps {
   name: string;
   image: ImageSourcePropType;
+  onPress?: () => void;
 }
 
-const BookCard: React.FC<BookCardProps> = ({name, image}) => {
+const BookCard: React.FC<BookCardProps> = ({name, image, onPress}) => {
   const tailwind = useTailwind();
   return (
     <View
@@ -22,7 +23,9 @@ const BookCard: React.FC<BookCardProps> = ({name, image}) => {
         ...styles.shadow,
         ...tailwind('bg-white mx-8 my-2 h-24 p-2 rounded'),
       }}>
-      <TouchableOpacity style={tailwind('flex flex-row items-center')}>
+      <TouchableOpacity
+        style={tailwind('flex flex-row items-center')}
+        onPress={() => onPress?.()}>
         <Image source={image} style={styles.image} />
         <View style={tailwind('flex flex-row flex-wrap items-center')}>
           <Text

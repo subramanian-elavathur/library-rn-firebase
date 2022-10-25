@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "39694988213",
+    "project_id": "libraryrnfirebase",
+    "storage_bucket": "libraryrnfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39694988213:android:98041315e6cd7ea1519ffc",
+        "android_client_info": {
+          "package_name": "com.libraryrnfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39694988213-qc5pme1ku82loagmlujr3ugq2le6l9fp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.libraryrnfirebase",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "39694988213-50n8h15i8vs88fdfe78vealtaee4qu9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgx0WSTGpzGxYb7jIzA4Bh0Y6CfOce4S8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39694988213-50n8h15i8vs88fdfe78vealtaee4qu9f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "39694988213-5s0eic6ohrd0ad6l8ppjdlmo8sdodok3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.LibraryRNFirebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
