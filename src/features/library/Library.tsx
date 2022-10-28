@@ -1,24 +1,22 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ScrollView, Text} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import BookCard from '../../components/book/BookCard';
 import {Presets, PRESETS} from '../../components/image/presets';
-import ImageSelector from '../../components/imageSelector/ImageSelector';
 import BottomTabAwateSafeAreaView from '../../components/safeArea/BottomTabAwareSafeAreaView';
 
-const presets = [
-  PRESETS[Presets.HP1],
-  PRESETS[Presets.HP2],
-  PRESETS[Presets.HP3],
-  PRESETS[Presets.HP4],
-  PRESETS[Presets.HP5],
-  PRESETS[Presets.HP6],
-  PRESETS[Presets.HP7],
-];
+// const presets = [
+//   PRESETS[Presets.HP1],
+//   PRESETS[Presets.HP2],
+//   PRESETS[Presets.HP3],
+//   PRESETS[Presets.HP4],
+//   PRESETS[Presets.HP5],
+//   PRESETS[Presets.HP6],
+//   PRESETS[Presets.HP7],
+// ];
 
 const Firebase: React.FC = () => {
   const tailwind = useTailwind();
-  const [showImageSelector, setShowImageSelector] = useState<boolean>(false);
   return (
     <BottomTabAwateSafeAreaView>
       <ScrollView style={tailwind('h-full bg-white')}>
@@ -28,7 +26,6 @@ const Firebase: React.FC = () => {
         <BookCard
           image={PRESETS[Presets.HP1].source}
           name={"Harry Potter and the Philosopher's Stone"}
-          onPress={() => setShowImageSelector(true)}
         />
         <BookCard
           image={PRESETS[Presets.HP2].source}
@@ -55,12 +52,6 @@ const Firebase: React.FC = () => {
           name={'Harry Potter and the Deathly Hallows'}
         />
       </ScrollView>
-      <ImageSelector
-        show={showImageSelector}
-        presets={presets}
-        onDismiss={() => setShowImageSelector(false)}
-        onImageSelection={() => {}}
-      />
     </BottomTabAwateSafeAreaView>
   );
 };
