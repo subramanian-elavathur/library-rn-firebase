@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useTailwind} from 'tailwind-rn/dist';
-import Library from '../library/Library';
+import LibraryNavigation from '../library/Navigation';
 import Profile from '../profile/Profile';
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +15,7 @@ const Navigation: React.FC = () => {
       sceneContainerStyle={tailwind('bg-white')}>
       <Tab.Screen
         name="Library"
-        component={Library}
+        component={LibraryNavigation}
         options={{
           tabBarIcon: ({color, size}) => (
             <Icon name="library-outline" size={size} color={color} />

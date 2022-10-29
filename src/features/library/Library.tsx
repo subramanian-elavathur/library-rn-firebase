@@ -3,7 +3,8 @@ import {ScrollView, Text} from 'react-native';
 import {useTailwind} from 'tailwind-rn';
 import BookCard from '../../components/book/BookCard';
 import {Presets, PRESETS} from '../../components/image/presets';
-import BottomTabAwateSafeAreaView from '../../components/safeArea/BottomTabAwareSafeAreaView';
+import BottomTabAwareSafeAreaView from '../../components/safeArea/BottomTabAwareSafeAreaView';
+import {BOOK_ROUTE} from './Book';
 
 // const presets = [
 //   PRESETS[Presets.HP1],
@@ -15,10 +16,12 @@ import BottomTabAwateSafeAreaView from '../../components/safeArea/BottomTabAware
 //   PRESETS[Presets.HP7],
 // ];
 
-const Firebase: React.FC = () => {
+export const LIBRARY_ROUTE = 'library';
+
+const Firebase: React.FC<any> = ({navigation}) => {
   const tailwind = useTailwind();
   return (
-    <BottomTabAwateSafeAreaView>
+    <BottomTabAwareSafeAreaView>
       <ScrollView style={tailwind('h-full bg-white')}>
         <Text style={tailwind('text-xl font-bold m-4 text-black')}>
           Library
@@ -26,6 +29,7 @@ const Firebase: React.FC = () => {
         <BookCard
           image={PRESETS[Presets.HP1].source}
           name={"Harry Potter and the Philosopher's Stone"}
+          onPress={() => navigation.navigate(BOOK_ROUTE, {bookId: 'testing'})}
         />
         <BookCard
           image={PRESETS[Presets.HP2].source}
@@ -52,7 +56,7 @@ const Firebase: React.FC = () => {
           name={'Harry Potter and the Deathly Hallows'}
         />
       </ScrollView>
-    </BottomTabAwateSafeAreaView>
+    </BottomTabAwareSafeAreaView>
   );
 };
 

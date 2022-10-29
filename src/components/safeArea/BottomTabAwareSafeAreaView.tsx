@@ -7,7 +7,7 @@ interface BottomTabAwateSafeAreaView extends PropsWithChildren {
   style?: ViewStyle;
 }
 
-const BottomTabAwateSafeAreaView: React.FC<BottomTabAwateSafeAreaView> = ({
+const BottomTabAwareSafeAreaView: React.FC<BottomTabAwateSafeAreaView> = ({
   children,
   style,
 }) => {
@@ -27,4 +27,4 @@ const BottomTabAwateSafeAreaView: React.FC<BottomTabAwateSafeAreaView> = ({
   );
 };
 
-export default BottomTabAwateSafeAreaView;
+export default BottomTabAwareSafeAreaView;
