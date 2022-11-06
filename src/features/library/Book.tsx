@@ -21,7 +21,7 @@ import {getBook, upsertBook} from '../../db/library';
 export const BOOK_ROUTE = 'book';
 
 const Book2: React.FC<any> = ({route, navigation}) => {
-  const {bookId} = route.params;
+  const bookId = route?.params?.bookId;
   const [name, setName] = useState<string | undefined>();
   const [isbn, setISBN] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();

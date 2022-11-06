@@ -10,6 +10,14 @@
   right: 1rem
 }
 
+.bottom-2 {
+  bottom: 0.5rem
+}
+
+.z-10 {
+  z-index: 10
+}
+
 .m-4 {
   margin: 1rem
 }
@@ -199,6 +207,11 @@
   background-color: rgb(96 165 250 / var(--tw-bg-opacity))
 }
 
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity))
+}
+
 .p-2 {
   padding: 0.5rem
 }
@@ -226,6 +239,11 @@
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem
 }
 
 .pl-1 {

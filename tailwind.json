@@ -14,6 +14,16 @@
 			"right": 16
 		}
 	},
+	"bottom-2": {
+		"style": {
+			"bottom": 8
+		}
+	},
+	"z-10": {
+		"style": {
+			"zIndex": 10
+		}
+	},
 	"m-4": {
 		"style": {
 			"marginTop": 16,
@@ -269,6 +279,12 @@
 			"backgroundColor": "rgb(96 165 250 / var(--tw-bg-opacity))"
 		}
 	},
+	"bg-blue-500": {
+		"style": {
+			"--tw-bg-opacity": 1,
+			"backgroundColor": "rgb(59 130 246 / var(--tw-bg-opacity))"
+		}
+	},
 	"p-2": {
 		"style": {
 			"paddingTop": 8,
@@ -305,6 +321,12 @@
 		"style": {
 			"paddingLeft": 32,
 			"paddingRight": 32
+		}
+	},
+	"px-3": {
+		"style": {
+			"paddingLeft": 12,
+			"paddingRight": 12
 		}
 	},
 	"pl-1": {
