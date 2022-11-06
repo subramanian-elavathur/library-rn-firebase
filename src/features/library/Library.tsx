@@ -29,7 +29,9 @@ const Firebase: React.FC<any> = ({navigation}) => {
         <BookCard
           image={PRESETS[Presets.HP1].source}
           name={"Harry Potter and the Philosopher's Stone"}
-          onPress={() => navigation.navigate(BOOK_ROUTE, {bookId: 'testing'})}
+          onPress={() =>
+            navigation.navigate(BOOK_ROUTE, {bookId: '0-7475-3269-9'})
+          }
         />
         <BookCard
           image={PRESETS[Presets.HP2].source}

@@ -30,6 +30,14 @@
 				<string>com.googleusercontent.apps.39694988213-5s0eic6ohrd0ad6l8ppjdlmo8sdodok3</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-39694988213-ios-d3baa8f0d02d11fb519ffc</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -46,7 +54,11 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
@@ -66,7 +78,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<key>NSCameraUsageDescription</key>
 </dict>
 </plist>

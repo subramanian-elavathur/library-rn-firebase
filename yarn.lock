@@ -1664,34 +1664,37 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/hooks/-/hooks-2.8.1.tgz"
   "version" "2.8.1"
 
-"@react-native-firebase/app-check@^16.0.0":
-  "integrity" "sha512-5MIczASrj7vrUpsrpNVKcgbhMumesrQgGrXfMUwcNv7gJfBMrHgn3prdT9URvICmJWXF0TDC/RCdaIoyaN/Ymg=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-16.0.0.tgz"
-  "version" "16.0.0"
+"@react-native-firebase/app-check@^16.4.2":
+  "integrity" "sha512-K+HATUPVYZwQuZXSD5RLhjE+trA+QgTCwtkdkG2VbA/DD3qVycd+7q/cyksVid80fLkhNPJuUkV19ut8x4WyTQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/app-check/-/app-check-16.4.2.tgz"
+  "version" "16.4.2"
 
-"@react-native-firebase/app@^16.0.0", "@react-native-firebase/app@16.0.0":
-  "integrity" "sha512-aetICzDF9XbBdGEY4tIKkA1sbWVz6l6TYv3JhreloQfEAFtq1UKvznudtrj3IdK0vVDnZlfIZDW96HVIv10wTw=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-16.0.0.tgz"
-  "version" "16.0.0"
+"@react-native-firebase/app@^16.4.2", "@react-native-firebase/app@16.4.2":
+  "integrity" "sha512-puuIW23PmS3svYtqJfVvnsOd2I6vE3DPWTpYuv8e34K+D9iTUiBW6XbiRDqFefXP3QHKvTRJAqNpRtMGybf0Uw=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-16.4.2.tgz"
+  "version" "16.4.2"
   dependencies:
     "@expo/config-plugins" "^5.0.1"
     "opencollective-postinstall" "^2.0.1"
     "superstruct" "^0.6.2"
 
-"@react-native-firebase/auth@^16.0.0":
-  "integrity" "sha512-cDfd2kQj+t/mYtcjvibJ+KxOYtJszE0qqNvdLwoG3FdFWJjCplwrRi9ETEbekQ1UIMNVURVwqCfYt6IwCAfcvw=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-16.0.0.tgz"
-  "version" "16.0.0"
+"@react-native-firebase/auth@^16.4.2":
+  "integrity" "sha512-dmXFJjxE6IlfHoDNAFczmRH7WpAEoxpZH/J7kCGrzOY5X/fKedCOA2R8CDxCfmvX51ww9ANtjiTA9bS75zZNeg=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-16.4.2.tgz"
+  "version" "16.4.2"
+  dependencies:
+    "@expo/config-plugins" "^5.0.1"
+    "plist" "^3.0.5"
 
-"@react-native-firebase/firestore@^16.0.0":
-  "integrity" "sha512-E6ss/aSdXU43FLLhb+nF5yQxotHbjXkykELbydELBuV3c0GReUQYsna6J51eN7ZKYMhzaoZloWPZsUlvYoh6WQ=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-16.0.0.tgz"
-  "version" "16.0.0"
+"@react-native-firebase/firestore@^16.4.2":
+  "integrity" "sha512-mNHUzIukGLxaYKe8uXC20np4of/r08vntOaoIZn/waBY48aYEhGm/mnMuTdYgI0Qh9vVWT+3r3SvnlngXmt91w=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-16.4.2.tgz"
+  "version" "16.4.2"
 
-"@react-native-firebase/storage@^16.0.0":
-  "integrity" "sha512-zkEM0Ac4ghjMm3azqaJ4Ut5Im83odpokklhc5XC4wzKG+M/R82vJUuANHKqw+wGEjT7RjmgL51MQe90b5lyP1w=="
-  "resolved" "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-16.0.0.tgz"
-  "version" "16.0.0"
+"@react-native-firebase/storage@^16.4.2":
+  "integrity" "sha512-wSBRE/Ny4wVnhbGe0zu1Sr+fBkwXmnxWHsLkAf4Y1qP1IdM5EuuInuIEwjY9+9TzkvefUBO4zrYW5DqkdVF96w=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-16.4.2.tgz"
+  "version" "16.4.2"
 
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
@@ -2132,9 +2135,9 @@
     "eslint-visitor-keys" "^3.3.0"
 
 "@xmldom/xmldom@~0.7.0":
-  "integrity" "sha512-HHXP9hskkFQHy8QxxUXkS7946FFIhYVfGqsk0WLwllmexN9x/+R4UBLvurHEuyXRfVEObVR8APuQehykLviwSQ=="
-  "resolved" "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.7.6.tgz"
-  "version" "0.7.6"
+  "integrity" "sha512-yceMpm/xd4W2a85iqZyO09gTnHvXF6pyiWjD2jcOJs7hRoZtNNOO1eJlhHj1ixA+xip2hOyGn+LgcvLCMo5zXA=="
+  "resolved" "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.7.9.tgz"
+  "version" "0.7.9"
 
 "abab@^2.0.3", "abab@^2.0.5":
   "integrity" "sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA=="

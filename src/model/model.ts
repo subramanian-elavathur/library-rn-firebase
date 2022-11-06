@@ -24,8 +24,4 @@ export interface Book extends FirebaseFirestoreTypes.DocumentData {
   name: string;
   isbn: string;
   description: string;
-  displayPictureUrl: string;
-  addedOn: Date;
-  addedBy: string; // user id
-  borrowHistory: BorrowHistory[];
 }
