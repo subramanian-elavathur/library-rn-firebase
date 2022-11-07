@@ -1,8 +1,8 @@
-import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Library, {LIBRARY_ROUTE} from './Library';
-import Book, {BOOK_ROUTE} from './Book';
+import React from 'react';
 import {useTailwind} from 'tailwind-rn/dist';
+import Book, {BOOK_ROUTE} from '../book/Book';
+import Library, {LIBRARY_ROUTE} from './Library';
 
 const Stack = createNativeStackNavigator();
 

@@ -5,6 +5,17 @@ import {Book} from '../model/model';
 
 export const BOOKS_COLLECTION = 'books';
 
+export const getBookV2 = (
+  isbn: string,
+  onResult: (snap: FirebaseFirestoreTypes.DocumentSnapshot<Book>) => void,
+  onError: (error: Error) => void,
+): any => {
+  return firestore()
+    .collection<Book>(BOOKS_COLLECTION)
+    .doc(isbn)
+    .onSnapshot(onResult, onError);
+};
+
 export const getBook = async (isbn: string): Promise<Book | undefined> => {
   return (
     await firestore().collection<Book>(BOOKS_COLLECTION).doc(isbn).get()

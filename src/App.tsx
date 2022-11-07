@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';

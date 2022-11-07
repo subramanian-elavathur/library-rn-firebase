@@ -2,6 +2,10 @@
   position: absolute
 }
 
+.relative {
+  position: relative
+}
+
 .bottom-0 {
   bottom: 0px
 }
@@ -14,8 +18,12 @@
   bottom: 0.5rem
 }
 
-.z-10 {
-  z-index: 10
+.top-0 {
+  top: 0px
+}
+
+.left-0 {
+  left: 0px
 }
 
 .m-4 {
@@ -241,9 +249,9 @@
   padding-right: 2rem
 }
 
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem
 }
 
 .pl-1 {

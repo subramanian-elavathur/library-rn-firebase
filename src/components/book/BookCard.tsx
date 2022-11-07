@@ -1,22 +1,48 @@
-import React from 'react';
+import storage from '@react-native-firebase/storage';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
-  ImageSourcePropType,
+  ImageURISource,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {useTailwind} from 'tailwind-rn';
+import BookPlaceholderImage from '../../../assets/book.png';
+import {bookImageStorageRefGenerator} from '../../features/book/Book';
 
 interface BookCardProps {
   name: string;
-  image: ImageSourcePropType;
+  isbn: string;
+  profilePictureUUID: string;
   onPress?: () => void;
 }
 
-const BookCard: React.FC<BookCardProps> = ({name, image, onPress}) => {
+const BookCard: React.FC<BookCardProps> = ({
+  name,
+  isbn,
+  profilePictureUUID,
+  onPress,
+}) => {
   const tailwind = useTailwind();
+  const [bookImageUri, setBookImageUri] = useState<
+    ImageURISource | undefined
+  >();
+
+  useEffect(() => {
+    const generateAndSetImageUri = async () => {
+      try {
+        const reference = storage().ref(bookImageStorageRefGenerator(isbn));
+        const downloadUri = await reference.getDownloadURL();
+        setBookImageUri({uri: downloadUri});
+      } catch (error) {
+        console.log(`Image not found for ISBN: ${isbn}`);
+      }
+    };
+    generateAndSetImageUri();
+  }, [isbn, profilePictureUUID]);
+
   return (
     <View
       style={{
@@ -26,7 +52,10 @@ const BookCard: React.FC<BookCardProps> = ({name, image, onPress}) => {
       <TouchableOpacity
         style={tailwind('flex flex-row items-center')}
         onPress={() => onPress?.()}>
-        <Image source={image} style={styles.image} />
+        <Image
+          source={bookImageUri ?? BookPlaceholderImage}
+          style={styles.image}
+        />
         <View style={tailwind('flex flex-row flex-wrap items-center')}>
           <Text
             style={tailwind('w-64 h-full px-4 text-xl font-bold text-black')}>

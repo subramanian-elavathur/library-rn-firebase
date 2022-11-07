@@ -1,3 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "disabled"
-}
+    "files.eol": "\n",
+    "java.configuration.updateBuildConfiguration": "automatic",
+  }
+  

@@ -39,7 +39,7 @@ interface ImageSelectorProps {
   presets?: Preset[];
 }
 
-const shadow = {
+export const shadow = {
   shadowColor: '#000',
   shadowOffset: {
     width: 0,

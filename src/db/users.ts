@@ -1,12 +1,19 @@
-import firestore from '@react-native-firebase/firestore';
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
 import {User} from '../model/model';
 
 export const USERS_COLLECTION = 'users';
 
-export const getUserProfile = async (id: string): Promise<User | undefined> => {
-  return (
-    await firestore().collection<User>(USERS_COLLECTION).doc(id).get()
-  ).data();
+export const getUserProfile = (
+  id: string,
+  onResult: (snap: FirebaseFirestoreTypes.DocumentSnapshot<User>) => void,
+  onError: (error: Error) => void,
+): any => {
+  return firestore()
+    .collection<User>(USERS_COLLECTION)
+    .doc(id)
+    .onSnapshot(onResult, onError);
 };
 
 export const updateUserProfile = async (user: User): Promise<void> => {

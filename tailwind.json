@@ -4,6 +4,11 @@
 			"position": "absolute"
 		}
 	},
+	"relative": {
+		"style": {
+			"position": "relative"
+		}
+	},
 	"bottom-0": {
 		"style": {
 			"bottom": 0
@@ -19,9 +24,14 @@
 			"bottom": 8
 		}
 	},
-	"z-10": {
+	"top-0": {
 		"style": {
-			"zIndex": 10
+			"top": 0
+		}
+	},
+	"left-0": {
+		"style": {
+			"left": 0
 		}
 	},
 	"m-4": {
@@ -323,10 +333,10 @@
 			"paddingRight": 32
 		}
 	},
-	"px-3": {
+	"py-6": {
 		"style": {
-			"paddingLeft": 12,
-			"paddingRight": 12
+			"paddingTop": 24,
+			"paddingBottom": 24
 		}
 	},
 	"pl-1": {

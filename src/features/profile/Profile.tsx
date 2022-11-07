@@ -1,22 +1,25 @@
+import storage from '@react-native-firebase/storage';
+import {v4 as uuidv4} from 'uuid';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Image,
   ImageSourcePropType,
+  ImageURISource,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import storage, {FirebaseStorageTypes} from '@react-native-firebase/storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useTailwind} from 'tailwind-rn';
-import Library from '../../../assets/library.png';
+import Reader from '../../../assets/reader.png';
 import {useAuth} from '../../components/authProvider/AuthProvider';
 import ImageSelector, {
   ImageSelectionResponse,
 } from '../../components/imageSelector/ImageSelector';
+import Loading from '../../components/loading/Loading';
 import {getUserProfile, updateUserProfile} from '../../db/users';
 import {User} from '../../model/model';
 
@@ -24,37 +27,47 @@ const Profile: React.FC = () => {
   const {auth, user} = useAuth();
   const [name, setName] = useState<string | null | undefined>(undefined);
   const [email, setEmail] = useState<string | null | undefined>(undefined);
+  const [profilePictureUUID, setProfilePictureUUID] = useState<string>('');
   const [showImageSelector, setShowImageSelector] = useState<boolean>(false);
   const [requestInProgress, setRequestInProgress] = useState<boolean>(false);
-  const [profilePictureReference, setProfilePictureReference] = useState<
-    FirebaseStorageTypes.Reference | undefined
-  >(undefined);
-  const [profilePictureUrl, setProfilePictureUrl] =
-    useState<ImageSourcePropType>(Library);
+  const profilePictureReference = storage().ref(`user/${user!.uid}/profile`);
+
+  const [newProfilePictureUri, setNewProfilePictureImageUri] = useState<
+    ImageURISource | undefined
+  >();
+
+  const [profilePictureUri, setProfilePictureUri] = useState<
+    ImageURISource | undefined
+  >();
 
   const tailwind = useTailwind();
 
   useEffect(() => {
-    const setUser = async () => {
-      const userProfile = await getUserProfile(user!.uid);
-      setName(userProfile?.name);
-      setEmail(userProfile?.contact.email);
-    };
+    return getUserProfile(
+      user!.uid,
+      profile => {
+        setRequestInProgress(true);
+        const userProfile = profile.data();
+        setName(userProfile?.name);
+        setEmail(userProfile?.contact.email);
+        setProfilePictureUUID(userProfile?.profilePictureUUID ?? '');
+        setRequestInProgress(false);
+      },
+      console.log,
+    );
+  }, [user]);
 
-    const setProfilePictureReference2 = async () => {
+  useEffect(() => {
+    const setProfilePicture = async () => {
       try {
-        const ref = storage().ref(`user/${user!.uid}/profile`);
-        setProfilePictureReference(ref);
-        const downloadUrl = await ref.getDownloadURL();
-        setProfilePictureUrl({uri: downloadUrl});
+        const downloadUrl = await profilePictureReference.getDownloadURL();
+        setProfilePictureUri({uri: downloadUrl});
       } catch (error) {
         console.log(`Error getting profile picture: ${error}`);
       }
     };
-
-    setUser();
-    setProfilePictureReference2();
-  }, [user]);
+    setProfilePicture();
+  }, [profilePictureUUID]);
 
   const signOut = async () => {
     setRequestInProgress(true);
@@ -65,17 +78,26 @@ const Profile: React.FC = () => {
   const updateProfile = async () => {
     setRequestInProgress(true);
     try {
+      if (newProfilePictureUri) {
+        await profilePictureReference.putFile(newProfilePictureUri.uri!);
+      }
+
       const updatedUser: User = {
         id: user!.uid,
         name: name ?? null,
-        profileUrl: null, // todo add coud storage url here
+        profilePictureUUID: newProfilePictureUri
+          ? uuidv4()
+          : profilePictureUUID,
         contact: {
           phone: user!.phoneNumber!,
           email: email ?? null,
         },
       };
       await updateUserProfile(updatedUser);
-      Alert.alert('Your profile has been updated!');
+
+      const downloadUrl = await profilePictureReference.getDownloadURL();
+      setProfilePictureUri({uri: downloadUrl});
+      setNewProfilePictureImageUri(undefined);
     } catch (error) {
       console.log(`Error updating profile picture: ${error}`);
     } finally {
@@ -86,15 +108,8 @@ const Profile: React.FC = () => {
   const updateProfilePicture = async (response: ImageSelectionResponse) => {
     setRequestInProgress(true);
     setShowImageSelector(false);
-    if (response.selectedImage?.uri && profilePictureReference) {
-      try {
-        await profilePictureReference.putFile(response.selectedImage?.uri);
-        setProfilePictureUrl({
-          uri: await profilePictureReference.getDownloadURL(),
-        });
-      } catch (error) {
-        console.log(`Error saving profile picture: ${error}`);
-      }
+    if (response.selectedImage?.uri) {
+      setNewProfilePictureImageUri({uri: response.selectedImage?.uri});
     }
     setRequestInProgress(false);
   };
@@ -104,8 +119,10 @@ const Profile: React.FC = () => {
       <View style={tailwind('flex h-full justify-center items-center')}>
         <TouchableOpacity onPress={() => setShowImageSelector(true)}>
           <Image
-            source={profilePictureUrl}
-            style={tailwind('h-20 w-20 mx-6 rounded-xl')}
+            source={newProfilePictureUri ?? profilePictureUri ?? Reader}
+            onLoadStart={() => setRequestInProgress(true)}
+            onLoadEnd={() => setRequestInProgress(false)}
+            style={tailwind('h-32 w-32 mx-6 rounded-xl')}
           />
           <View
             style={tailwind(
@@ -146,20 +163,21 @@ const Profile: React.FC = () => {
             editable={!requestInProgress}
           />
         </View>
-        {!requestInProgress && (
-          <View style={tailwind('flex flex-row mt-6')}>
-            <TouchableOpacity
-              onPress={signOut}
-              style={tailwind('py-2 px-4 rounded bg-slate-400')}>
-              <Text style={tailwind('text-xl text-white')}>Sign Out</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={updateProfile}
-              style={tailwind('py-2 px-8 rounded bg-blue-400 ml-4')}>
-              <Text style={tailwind('text-xl text-white')}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+
+        <View style={tailwind('flex flex-row mt-6')}>
+          <TouchableOpacity
+            onPress={signOut}
+            disabled={requestInProgress}
+            style={tailwind('py-2 px-4 rounded bg-slate-400')}>
+            <Text style={tailwind('text-xl text-white')}>Sign Out</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={updateProfile}
+            disabled={requestInProgress}
+            style={tailwind('py-2 px-8 rounded bg-blue-400 ml-4')}>
+            <Text style={tailwind('text-xl text-white')}>Save</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <ImageSelector
         show={showImageSelector}
@@ -168,6 +186,7 @@ const Profile: React.FC = () => {
           updateProfilePicture(response)
         }
       />
+      <Loading loading={requestInProgress} loaderText={'Updating'} />
     </SafeAreaView>
   );
 };

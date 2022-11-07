@@ -1,64 +1,108 @@
-import React, {useEffect} from 'react';
-import {FirebaseStorageTypes} from '@react-native-firebase/storage';
-import {useState} from 'react';
+import storage from '@react-native-firebase/storage';
+import React, {useEffect, useState} from 'react';
 import {
-  Alert,
   Image,
-  ImageSourcePropType,
+  ImageURISource,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useTailwind} from 'tailwind-rn/dist';
-import {PRESETS} from '../../components/image/presets';
-import ImageSelector from '../../components/imageSelector/ImageSelector';
+import {v4 as uuidv4} from 'uuid';
+import BookPlaceholderImage from '../../../assets/book.png';
+import ImageSelector, {
+  ImageSelectionResponse,
+} from '../../components/imageSelector/ImageSelector';
 import BottomTabAwareSafeAreaView from '../../components/safeArea/BottomTabAwareSafeAreaView';
+import {getBook, getBookV2, upsertBook} from '../../db/library';
 import {Book} from '../../model/model';
-import {getBook, upsertBook} from '../../db/library';
+import Loading from '../../components/loading/Loading';
 
 export const BOOK_ROUTE = 'book';
 
+export const bookImageStorageRefGenerator = (isbn: string) => `book/${isbn}`;
+
 const Book2: React.FC<any> = ({route, navigation}) => {
+  const tailwind = useTailwind();
   const bookId = route?.params?.bookId;
   const [name, setName] = useState<string | undefined>();
   const [isbn, setISBN] = useState<string | undefined>();
+  const [bookImageUUID, setBookImageUUID] = useState<string | undefined>();
   const [description, setDescription] = useState<string | undefined>();
   const [showImageSelector, setShowImageSelector] = useState<boolean>(false);
   const [requestInProgress, setRequestInProgress] = useState<boolean>(false);
-  const [profilePictureReference, setProfilePictureReference] = useState<
-    FirebaseStorageTypes.Reference | undefined
-  >(undefined);
-  const [profilePictureUrl, setProfilePictureUrl] = useState<
-    ImageSourcePropType | undefined
+  const bookImageReference = storage().ref(
+    bookImageStorageRefGenerator(isbn ?? ''),
+  );
+  const [newBookImageUri, setNewBookImageUri] = useState<
+    ImageURISource | undefined
   >();
-  const tailwind = useTailwind();
+  const [bookImageUri, setBookImageUri] = useState<
+    ImageURISource | undefined
+  >();
 
   useEffect(() => {
-    const setBook = async () => {
-      const bk = await getBook(bookId);
-      if (bk) {
-        setName(bk.name);
-        setISBN(bk.isbn);
-        setDescription(bk.description);
-      }
-    };
-    setBook();
+    return getBookV2(
+      bookId,
+      bookSnapshot => {
+        setRequestInProgress(true);
+        const bk = bookSnapshot.data();
+        if (bk) {
+          setName(bk.name);
+          setISBN(bk.isbn);
+          setDescription(bk.description);
+          setBookImageUUID(bk.profilePictureUUID);
+        }
+        setRequestInProgress(false);
+      },
+      console.log,
+    );
   }, [bookId]);
 
-  const upsertBook2 = async () => {
+  useEffect(() => {
+    const setBookImage = async () => {
+      try {
+        const downloadUrl = await bookImageReference.getDownloadURL();
+        setBookImageUri({uri: downloadUrl});
+      } catch (error) {
+        console.log(`Image not found for ISBN: ${bookId}`);
+      }
+    };
+    setBookImage();
+  }, [bookImageUUID]);
+
+  const updateBook = async () => {
+    setRequestInProgress(true);
+
+    if (newBookImageUri) {
+      await bookImageReference.putFile(newBookImageUri.uri!);
+    }
+
     if (name && isbn && description) {
-      setRequestInProgress(true);
       const book: Book = {
         name: name,
         isbn: isbn,
         description: description,
+        profilePictureUUID: newBookImageUri ? uuidv4() : bookImageUUID!,
       };
       await upsertBook(book);
-      setRequestInProgress(false);
-      Alert.alert('Book data saved successfully');
     }
+
+    const downloadUrl = await bookImageReference.getDownloadURL();
+    setBookImageUri({uri: downloadUrl});
+    setNewBookImageUri(undefined);
+    setRequestInProgress(false);
+  };
+
+  const updateBookImageUri = async (response: ImageSelectionResponse) => {
+    setRequestInProgress(true);
+    setShowImageSelector(false);
+    if (response.selectedImage?.uri) {
+      setNewBookImageUri({uri: response.selectedImage?.uri});
+    }
+    setRequestInProgress(false);
   };
 
   return (
@@ -67,7 +111,9 @@ const Book2: React.FC<any> = ({route, navigation}) => {
         style={tailwind('flex flex-col justify-center items-center h-full')}>
         <TouchableOpacity onPress={() => setShowImageSelector(true)}>
           <Image
-            source={PRESETS['hp-1'].source}
+            source={newBookImageUri ?? bookImageUri ?? BookPlaceholderImage}
+            onLoadStart={() => setRequestInProgress(true)}
+            onLoadEnd={() => setRequestInProgress(false)}
             style={tailwind('h-32 w-32 mx-6 rounded-xl')}
           />
           <View
@@ -128,12 +174,14 @@ const Book2: React.FC<any> = ({route, navigation}) => {
         <View style={tailwind('flex flex-row mt-6')}>
           <TouchableOpacity
             style={tailwind('py-2 px-4 rounded bg-slate-400')}
+            disabled={requestInProgress}
             onPress={() => navigation.goBack()}>
             <Text style={tailwind('text-xl text-white')}>Back</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={tailwind('py-2 px-8 rounded bg-blue-400 ml-4')}
-            onPress={() => upsertBook2()}>
+            disabled={requestInProgress}
+            onPress={() => updateBook()}>
             <Text style={tailwind('text-xl text-white')}>Save</Text>
           </TouchableOpacity>
         </View>
@@ -141,8 +189,9 @@ const Book2: React.FC<any> = ({route, navigation}) => {
       <ImageSelector
         show={showImageSelector}
         onDismiss={() => setShowImageSelector(false)}
-        onImageSelection={() => setShowImageSelector(false)}
+        onImageSelection={response => updateBookImageUri(response)}
       />
+      <Loading loading={requestInProgress} loaderText={'Updating'} />
     </BottomTabAwareSafeAreaView>
   );
 };
