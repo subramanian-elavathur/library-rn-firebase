@@ -2,9 +2,7 @@ import storage from '@react-native-firebase/storage';
 import {v4 as uuidv4} from 'uuid';
 import React, {useEffect, useState} from 'react';
 import {
-  Alert,
   Image,
-  ImageSourcePropType,
   ImageURISource,
   Text,
   TextInput,

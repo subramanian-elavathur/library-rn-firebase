@@ -16,7 +16,7 @@ import ImageSelector, {
   ImageSelectionResponse,
 } from '../../components/imageSelector/ImageSelector';
 import BottomTabAwareSafeAreaView from '../../components/safeArea/BottomTabAwareSafeAreaView';
-import {getBook, getBookV2, upsertBook} from '../../db/library';
+import {getBook, upsertBook} from '../../db/library';
 import {Book} from '../../model/model';
 import Loading from '../../components/loading/Loading';
 
@@ -44,7 +44,7 @@ const Book2: React.FC<any> = ({route, navigation}) => {
   >();
 
   useEffect(() => {
-    return getBookV2(
+    return getBook(
       bookId,
       bookSnapshot => {
         setRequestInProgress(true);
